@@ -35,7 +35,7 @@ def contains_stuff(message):
     return False
 
 def contains_too_old(message):
-    return ( re.findall('old', message.text) and not re.findall('?', message.text) )
+    return ( 'old' in message.text and not '?' in message.text )
 
 def from_pancake(message):
     return message.from_user.username == 'pancake'
