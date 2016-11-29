@@ -23,14 +23,14 @@ import sys
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+                    level=logging.DEBUG)
 
 logger = logging.getLogger(__name__)
 
 def contains_stuff(message):
     if re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message.text):
         return True
-    if message.photo or message.document:
+    if message.video or message.audio or message.photo or message.document:
         return True
     return False
 
@@ -87,8 +87,7 @@ def reply_too_old(message):
 
 def echo(bot, update):
     # joputa--
-    stuff = contains_stuff(update.message)
-    if stuff:
+    if contains_stuff(update.message):
        update.message.reply_text(random.choice(too_old))
     if contains_too_old(update.message):
        update.message.reply_text(random.choice(molt_be).format(update.message.from_user.name))
@@ -96,6 +95,7 @@ def echo(bot, update):
     # joputa++
     #if from_pancake(update.message):
     #    if stuff:
+    #        update.message.reply_text(random.choice(too_old))
     #    elif contains_too_old(update.message):
     #        update.message.reply_text(random.choice(molt_be))
     #else:
